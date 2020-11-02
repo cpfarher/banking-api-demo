@@ -1,63 +1,79 @@
-### Objective
+# banking-app
 
-Your assignment is to build an internal API for a fake financial institution using Node and any framework.
+This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
+[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 
-### Brief
+## Install dependencies
 
-While modern banks have evolved to serve a plethora of functions, at their core, banks must provide certain basic features. Today, your task is to build the basic HTTP API for one of those banks! Imagine you are designing a backend API for bank employees. It could ultimately be consumed by multiple frontends (web, iOS, Android etc).
+By default, dependencies were installed when this application was generated.
+Whenever dependencies in `package.json` are changed, run the following command:
 
-### Tasks
-
-- Implement assignment using:
-  - Language: **Node**
-  - Framework: **any framework**
-- There should be API routes that allow them to:
-  - Create a new bank account for a customer, with an initial deposit amount. A
-    single customer may have multiple bank accounts.
-  - Transfer amounts between any two accounts, including those owned by
-    different customers.
-  - Retrieve balances for a given account.
-  - Retrieve transfer history for a given account.
-- Write tests for your business logic
-
-Feel free to pre-populate your customers with the following:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Arisha Barron"
-  },
-  {
-    "id": 2,
-    "name": "Branden Gibson"
-  },
-  {
-    "id": 3,
-    "name": "Rhonda Church"
-  },
-  {
-    "id": 4,
-    "name": "Georgina Hazel"
-  }
-]
+```sh
+npm install
 ```
 
-You are expected to design any other required models and routes for your API.
+To only install resolved dependencies in `package-lock.json`:
 
-### Evaluation Criteria
+```sh
+npm ci
+```
 
-- **Node** best practices
-- Completeness: did you complete the features?
-- Correctness: does the functionality act in sensible, thought-out ways?
-- Maintainability: is it written in a clean, maintainable way?
-- Testing: is the system adequately tested?
-- Documentation: is the API well-documented?
+## Run the application
 
-### CodeSubmit
+```sh
+npm start
+```
 
-Please organize, design, test and document your code as if it were going into production - then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
+You can also run `node .` to skip the build step.
 
-All the best and happy coding,
+Open http://127.0.0.1:3000 in your browser.
 
-The Trustle Team
+## Rebuild the project
+
+To incrementally build the project:
+
+```
+npm run build
+```
+
+To force a full build by cleaning up cached artifacts:
+
+```
+npm run clean
+npm run build
+```
+
+## Fix code style and formatting issues
+
+If `eslint` and `prettier` are enabled for this project, you can use the
+following commands to check code style and formatting issues.
+
+```sh
+npm run lint
+```
+
+To automatically fix such issues:
+
+```sh
+npm run lint:fix
+```
+
+## Other useful commands
+
+- `npm run migrate`: Migrate database schemas for models
+- `npm run openapi-spec`: Generate OpenAPI spec into a file
+- `npm run docker:build`: Build a Docker image for this application
+- `npm run docker:run`: Run this application inside a Docker container
+
+## Tests
+
+```sh
+npm test
+```
+
+## What's next
+
+Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
+understand how you can continue to add features to this application.
+
+[![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
