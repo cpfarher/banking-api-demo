@@ -11,6 +11,9 @@ module.exports = (app) => {
 
   // Retrieve a single Customer with id
   router.get("/:id", customers.findOne);
+  
+  // Retrieve accounts for a Customer with id
+  router.get("/:id/accounts", customers.findOneWithAssociatedAccounts);
 
   // Update a Customer with id
   router.put("/:id", customers.update);
