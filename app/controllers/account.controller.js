@@ -9,7 +9,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!customerId) {
     res.status(400).send({
-      message: "CustomerId can not be empty!",
+      message: "customerId can not be empty!",
     });
     return;
   }
