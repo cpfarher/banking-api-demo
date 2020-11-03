@@ -56,7 +56,8 @@ db.sequelize.sync({ alter: true }).then(() => {
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Bank api..." });
+  //res.json({ message: "Bank api..." });
+  res.redirect('api-docs/')
 });
 
 
