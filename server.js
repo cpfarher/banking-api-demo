@@ -37,7 +37,7 @@ const swaggerOptions = {
     },
     servers: [{ url: "http://localhost:8080/" }],
   },
-  apis: ["app/routes/*.js"],
+  apis: ["app/routes/*.js", "app/models/*.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -47,7 +47,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const db = require("./app/models");
 require("./app/routes/customer.routes")(app);
 require("./app/routes/account.routes")(app);
-// require("./app/routes/transfer.routes")(app);
+//require("./app/routes/transfer.routes")(app);
 
 // force: true => for create table and dropping
 db.sequelize.sync({ alter: true }).then(() => {
