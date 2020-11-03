@@ -1,5 +1,7 @@
+//@todo: no hardcode! pass to environment variables
+
 module.exports = {
-  HOST: "localhost",
+  HOST: "db_postgres", // localhost when is local,db_postgres for production
   USER: "postgres",
   PASSWORD: "postgres",
   DB: "banking",
