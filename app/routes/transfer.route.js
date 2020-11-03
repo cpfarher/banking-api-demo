@@ -21,5 +21,5 @@ module.exports = (app) => {
   // Delete all transfers
   router.delete("/", transfers.deleteAll);
 
-  app.use("/api/transfers", router);
+  app.use("/transfers", router);
 };
