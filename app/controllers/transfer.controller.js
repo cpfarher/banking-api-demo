@@ -1,7 +1,10 @@
 const db = require("../models");
 const Transfer = db.transfers;
+const Account = db.accounts;
 const Op = db.Sequelize.Op;
-import _ from 'lodash'
+const _ = require('lodash')
+const sequelice = db.sequelize;
+
 // Create and Save a new transfer
 exports.create = (req, res) => {
   // Validate request
@@ -9,32 +12,36 @@ exports.create = (req, res) => {
   // @todo: check rules for validate transfer!
   // check transfer from and transfer to account exists
   // 
-  if (!req.body.amount && _.isFinite(req.body.amount)) {
+  const {amount, description, fromAccountId, toAccountId } = req.body
+
+  if (!amount && !_.isFinite(amount)) {
     res.status(400).send({
       message: "Amount can not be empty!",
     });
     return;
   }
-  
-    const transfer = {
-        // ip: req.body.ip,
-        description: req.body.description,
-        amount: Math.abs(amount),
-        fromAccountId: fromAccountId,
-        toAccountId: toAccountId,
-    };
 
-    Transfer.create(transfer)
-      .then((data) => {
-        res.send(data);
+  Promise.all([
+    Account.findByPk(fromAccountId),
+    Account.findByPk(toAccountId)
+  ]).then(([fromAccount, toAccount]) => {
+    if (fromAccount && toAccount) {
+      // register transfer:
+      const transfer = {
+          // ip: req.body.ip,
+          description: description,
+          amount: Math.abs(amount),
+          fromAccountId: fromAccountId,
+          toAccountId: toAccountId,
+      };
+      Transfer.create(transfer).then((res) => {
+        fromAccount.balance = fromAccount.balance - Math.abs(amount)
+        toAccount.balance = toAccount.balance + Math.abs(amount)
+        fromAccount.save();
+        toAccount.save();
       })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "There are some problem creating the Transfer.",
-        });
-      });
-
+    }
+  })
 };
 
 // Retrieve all Transfers from the database.
