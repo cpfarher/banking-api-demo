@@ -14,21 +14,49 @@ module.exports = (app) => {
    *    responses:
    *      '200':
    *        description: A successful response
+   *      '500':
+   *        description: A problem occurred in the server
    */
   router.get("/", customers.findAll);
 
   /**
    * @swagger
-   * /customers/:id:
+   * /customers/{customerId}:
    *  get:
    *    description: Retrieve a single Customer with id
+   *    parameters:
+   *      - in: path
+   *        name: customerId
+   *        type: integer
+   *        required: true
+   *        description: Numeric ID of the customer to get
    *    responses:
    *      '200':
    *        description: A successful response
+   *      '500':
+   *        description: A problem occurred in the server
    */
   router.get("/:id", customers.findOne);
 
-  // Retrieve accounts for a Customer with id
+  /**
+   * @swagger
+   * /customers/{customerId}/accounts:
+   *  get:
+   *    description: Retrieve a single Customer with id with it's account associated
+   *    parameters:
+   *      - in: path
+   *        name: customerId
+   *        type: integer
+   *        required: true
+   *        description: Numeric ID of the customer to get
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   *      '400':
+   *        description: 
+   *      '500':
+   *        description: A problem occurred in the server
+   */
   router.get("/:id/accounts", customers.findOneWithAssociatedAccounts);
 
   // Update a Customer with id
@@ -42,3 +70,4 @@ module.exports = (app) => {
 
   app.use("/customers", router);
 };
+
