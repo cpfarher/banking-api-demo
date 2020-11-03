@@ -9,8 +9,11 @@ module.exports = (app) => {
   /**
    * @swagger
    * /customers:
+   *
    *  get:
-   *    description: Retrieve all Customers
+   *    summary: Retrieve all Customers
+   *    tags:
+   *      - Customer
    *    responses:
    *      '200':
    *        description: A successful response
@@ -23,7 +26,9 @@ module.exports = (app) => {
    * @swagger
    * /customers/{customerId}:
    *  get:
-   *    description: Retrieve a single Customer with id
+   *    summary: Retrieve a single Customer with id
+   *    tags:
+   *      - Customer
    *    parameters:
    *      - in: path
    *        name: customerId
@@ -42,7 +47,9 @@ module.exports = (app) => {
    * @swagger
    * /customers/{customerId}/accounts:
    *  get:
-   *    description: Retrieve a single Customer with id with it's account associated
+   *    summary: Retrieve a single Customer with id with it's account associated
+   *    tags:
+   *      - Customer
    *    parameters:
    *      - in: path
    *        name: customerId
@@ -53,7 +60,7 @@ module.exports = (app) => {
    *      '200':
    *        description: A successful response
    *      '400':
-   *        description: 
+   *        description:
    *      '500':
    *        description: A problem occurred in the server
    */

@@ -8,7 +8,9 @@ module.exports = (app) => {
    * @swagger
    * /accounts:
    *  post:
-   *    description: Create a new bank account associated to customer
+   *    summary: Create a new bank account associated to customer
+   *    tags:
+   *      - Account
    *    consumes:
    *      - application/json
    *      - application/x-www-form-urlencoded
