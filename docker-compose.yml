@@ -5,9 +5,18 @@ services:
     container_name: 'db_postgres'
     image: postgres:13.0-alpine
     restart: unless-stopped
-    volumes:
-      - ./db_data:/var/lib/postgresql/data
+    #volumes:
+    #  - ./db_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
     env_file:
       - ./config/postgres.env
+
+  api:
+    container_name: 'api'
+    image: 'bank_api'
+    restart: unless-stopped
+    ports: 
+      - '8080:8080'
+    depends_on:
+      - db_postgres
