@@ -2,6 +2,15 @@
 
 Your assignment is to build an internal API for a fake financial institution using Node and any framework.
 
+### How to Run
+We recommend to run the system with docker-compose. To install docker-compose, go to [this link](https://docs.docker.com/compose/install/) and follow the instructions for your OS. Note that for Windows and MacOS, docker-compose is included in Docker desktop. For Linux, you'd have to download both programs separately
+
+After docker-compose is installed, follow these steps:
+
+1. Clone this project `git clone https://trustle-iaqpie@git.codesubmit.io/trustle/banking-api-w-node-iaqpie && cd banking-api-w-node-iaqpie`
+2. Execute `make run`. Running this command will build the image for run the system locally.
+3. Once you executed `make run`, **wait until all the components init** (it may take a couple minutes) and access the web api through <http://localhost:8080>.
+
 ### Brief
 
 While modern banks have evolved to serve a plethora of functions, at their core, banks must provide certain basic features. Today, your task is to build the basic HTTP API for one of those banks! Imagine you are designing a backend API for bank employees. It could ultimately be consumed by multiple frontends (web, iOS, Android etc).
