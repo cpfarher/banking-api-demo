@@ -47,11 +47,21 @@ exports.findAll = (req, res) => {
       });
 };
 
+exports.findOneWithAssociatedAccounts = (req, res) => {
+  // wrapper for get accounts for a customer
+  return this.findOne({ ...req, ...{ associatedAccounts: true } }, res);
+}
+
 // Find a single Customer with an id
 exports.findOne = (req, res) => {
-     const id = req.params.id;
+     const { associatedAccounts } = req;
+     const { id } = req.params;
 
-     Customer.findByPk(id)
+     const includes = associatedAccounts
+       ? { include: ["accounts"] }
+       : { };
+       
+     Customer.findByPk(id, includes)
        .then((data) => {
          res.send(data);
        })
@@ -64,7 +74,7 @@ exports.findOne = (req, res) => {
 
 // Update a Customer by the id in the request
 exports.update = (req, res) => {
-      const id = req.params.id;
+      const id = req.body.id;
 
       Customer.update(req.body, {
         where: { id: id },
@@ -89,7 +99,7 @@ exports.update = (req, res) => {
 
 // Delete a Customer with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const id = req.body.id;
 
     Customer.destroy({
       where: { id: id },
@@ -124,7 +134,7 @@ exports.deleteAll = (req, res) => {
       .catch((err) => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all tutorials.",
+            err.message || "Some error occurred while removing all customers.",
         });
       });
 };
