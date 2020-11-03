@@ -6,12 +6,28 @@ module.exports = (app) => {
   // Create a new Customer
   router.post("/", customers.create);
 
-  // Retrieve all Customers
+  /**
+   * @swagger
+   * /customers:
+   *  get:
+   *    description: Retrieve all Customers
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
   router.get("/", customers.findAll);
 
-  // Retrieve a single Customer with id
+  /**
+   * @swagger
+   * /customers/:id:
+   *  get:
+   *    description: Retrieve a single Customer with id
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
   router.get("/:id", customers.findOne);
-  
+
   // Retrieve accounts for a Customer with id
   router.get("/:id/accounts", customers.findOneWithAssociatedAccounts);
 
@@ -24,5 +40,5 @@ module.exports = (app) => {
   // Delete all Customers
   router.delete("/", customers.deleteAll);
 
-  app.use("/api/customers", router);
+  app.use("/customers", router);
 };
