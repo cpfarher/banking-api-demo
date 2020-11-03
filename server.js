@@ -18,14 +18,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 require("./app/routes/customer.routes")(app);
+require("./app/routes/account.routes")(app);
 
-db.sequelize.sync({ force: true }).then(() => {
+// force: true => for create table and dropping
+db.sequelize.sync({ alter: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Banking api..." });
+  res.json({ message: "Bank api..." });
 });
 
 
