@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require("swagger-ui-express");
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -16,9 +18,36 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+// check this for options: https://swagger.io/specification/#infoObject
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "Bank api demo",
+      description: "A Bank api demo.",
+      contact: {
+        name: "Christian Pfarher",
+        email: "christianpfarher@argeniss.com",
+      },
+      license: {
+        name: "Apache 2.0",
+        url: "https://www.apache.org/licenses/LICENSE-2.0.html",
+      },
+      version: "1.0.0",
+    },
+    servers: [{ url: "http://localhost:8080/" }],
+  },
+  apis: ["app/routes/*.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+
 const db = require("./app/models");
 require("./app/routes/customer.routes")(app);
 require("./app/routes/account.routes")(app);
+// require("./app/routes/transfer.routes")(app);
 
 // force: true => for create table and dropping
 db.sequelize.sync({ alter: true }).then(() => {
