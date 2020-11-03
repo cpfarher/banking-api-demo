@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-require("./app/routes/customer.routes")(app);
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -18,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-
+require("./app/routes/customer.routes")(app);
 
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
