@@ -17,6 +17,7 @@ After docker-compose is installed, follow these steps:
 * Add more validations on models
 * Improve historial transfer: Create a paper trail of a model (without relationships) for transfers (in order to keep versioning if instance model was deleted) - possible use of: sequelize-paper-trail npm package.
 * Implement migrations and seed with sequelize-cli
+* Add pagination to api.
 
 ### Brief
 
