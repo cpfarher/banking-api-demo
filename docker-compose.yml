@@ -16,7 +16,9 @@ services:
     container_name: 'api'
     image: 'bank_api'
     restart: unless-stopped
-    ports: 
+    ports:
       - '8080:8080'
     depends_on:
       - db_postgres
+    env_file:
+      - ./app/config/production.env
