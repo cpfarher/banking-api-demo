@@ -20,5 +20,7 @@ services:
       - '8080:8080'
     depends_on:
       - db_postgres
+    environment:
+      WAIT_HOSTS: db_postgres:5432
     env_file:
-      - app/config/production.env
+      - app/config/production.env      
