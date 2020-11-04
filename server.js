@@ -1,7 +1,7 @@
+const config = require("./app/config/config.js");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
 const app = express();
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require("swagger-ui-express");
@@ -18,7 +18,8 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+//===============================================================
+//===============SWAGGER DOCUMENTATION FOR API=====================
 // check this for options: https://swagger.io/specification/#infoObject
 const swaggerOptions = {
   swaggerDefinition: {
@@ -42,27 +43,37 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+//===============================================================
+//===============================================================
 
-
+//===============================================================
+//========================MODELS=================================
 const db = require("./app/models");
 require("./app/routes/customer.routes")(app);
 require("./app/routes/account.routes")(app);
 require("./app/routes/transfer.routes")(app);
+//===============================================================
+//===============================================================
 
-// force: true => for create table and dropping
+//===============================================================
+//========================SEQUELIZE==============================
+// SEQUELIZE: force: true => for create table and dropping
 db.sequelize.sync({ alter: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
+//===============================================================
+//===============================================================
 
-// simple route
+//===============================================================
+//==================ROOT ROUTE AND START APP=====================
 app.get("/", (req, res) => {
   //res.json({ message: "Bank api..." });
   res.redirect('api-docs/')
 });
 
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+app.listen(config.PORT, () => {
+  console.log(`NODE_ENV=${config.NODE_ENV}`);
+  console.log(`Server is running on: http://${config.HOST}:${config.PORT}`);
 });
+//===============================================================
+//===============================================================

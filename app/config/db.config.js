@@ -1,10 +1,11 @@
 //@todo: no hardcode! pass to environment variables
+const dbConfig = require("./config.js");
 
 module.exports = {
-  HOST: "db_postgres", // localhost when is local,db_postgres for production
-  USER: "postgres",
-  PASSWORD: "postgres",
-  DB: "banking",
+  HOST: `${dbConfig.DB_HOST}`, // localhost when is local,db_postgres for production
+  USER: `${dbConfig.DB_USER}`,
+  PASSWORD: `${dbConfig.DB_PASSWORD}`,
+  DB: `${dbConfig.DB_NAME}`,
   dialect: "postgres",
   pool: {
     max: 5,
