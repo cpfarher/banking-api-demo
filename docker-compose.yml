@@ -10,7 +10,7 @@ services:
     ports:
       - '5432:5432'
     env_file:
-      - ./config/postgres.env
+      - app/config/production.env
 
   api:
     container_name: 'api'
@@ -21,4 +21,4 @@ services:
     depends_on:
       - db_postgres
     env_file:
-      - ./app/config/production.env
+      - app/config/production.env
