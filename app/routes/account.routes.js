@@ -46,10 +46,41 @@ module.exports = (app) => {
    */
   router.post("/", accounts.create);
 
-  // Retrieve all Accounts
+  /**
+   * @swagger
+   * /accounts:
+   *
+   *  get:
+   *    summary: Retrieve all Accounts
+   *    tags:
+   *      - Account
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   *      '500':
+   *        description: A problem occurred in the server
+   */
   router.get("/", accounts.findAll);
 
-  // Retrieve a single Account with id
+  /**
+   * @swagger
+   * /accounts/{accountId}:
+   *  get:
+   *    summary: Retrieve a single Account with id
+   *    tags:
+   *      - Account
+   *    parameters:
+   *      - in: path
+   *        name: accountId
+   *        type: integer
+   *        required: true
+   *        description: Numeric ID of the account to get
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   *      '500':
+   *        description: A problem occurred in the server
+   */
   router.get("/:id", accounts.findOne);
 
   // Update a Account with id
