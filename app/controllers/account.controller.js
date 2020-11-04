@@ -2,6 +2,7 @@ const db = require("../models");
 const Account = db.accounts;
 const Customer = db.customers;
 const Op = db.Sequelize.Op;
+const _ = require('lodash');
 
 // Create and Save a new Account
 exports.create = (req, res) => {
@@ -61,6 +62,41 @@ exports.findAll = (req, res) => {
     });
 };
 
+
+exports.findOneWithTransferHistory = (req, res) => {
+   const { id } = req.params;
+   const { associatedTransfers } = req;
+
+   const includes = associatedTransfers
+     ? { include: ["outgoingTransfer", "incomingTransfer"] }
+     : {};
+
+   Account.findByPk(id, includes)
+     .then((data) => {
+       let history = []
+       Promise.all([data.getIncomingTransfer(), data.getOutgoingTransfer()]).then(
+         ([incomingTransfers,outgointTransfers]) => {
+           incomingTransfers.forEach((i) => {
+            history.push({
+              ...i.get({plain:true}),
+              ...{ transferType: "incoming" },
+            });
+           })
+           outgointTransfers.forEach((o) => {
+             history.push({
+               ...o.get({plain:true}),
+               ...{ transferType: "outgoing" },
+             });
+           });
+           res.send(_.sortBy(history, ['createdAt']))
+         })
+     })
+     .catch((err) => {
+       res.status(422).send({
+         message: "Error retrieving Account id=" + id,
+       });
+     });
+};
 
 exports.findOneWithAssociatedTransfers = (req, res) => {
   // wrapper for get accounts for a customer
