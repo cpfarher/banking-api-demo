@@ -83,6 +83,29 @@ module.exports = (app) => {
    */
   router.get("/:id", accounts.findOne);
 
+  /**
+   * @swagger
+   * /accounts/{customerId}/transfers:
+   *  get:
+   *    summary: Retrieve an account with owns associated incoming and outgoing transfers
+   *    tags:
+   *      - Account
+   *    parameters:
+   *      - in: path
+   *        name: customerId
+   *        type: integer
+   *        required: true
+   *        description: Numeric ID of the account to get
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   *      '400':
+   *        description:
+   *      '500':
+   *        description: A problem occurred in the server
+   */
+  router.get("/:id/transfers", accounts.findOneWithAssociatedTransfers);
+
   // Update a Account with id
   router.put("/:id", accounts.update);
 

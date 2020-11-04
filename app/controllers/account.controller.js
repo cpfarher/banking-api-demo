@@ -52,19 +52,30 @@ exports.findAll = (req, res) => {
       });
 };
 
+
+exports.findOneWithAssociatedTransfers = (req, res) => {
+  // wrapper for get accounts for a customer
+  return this.findOne({ ...req, ...{ associatedTransfers: true } }, res);
+};
+
 // Find a single Account with an id
 exports.findOne = (req, res) => {
-     const id = req.params.id;
+  const { id } = req.params;
+  const { associatedTransfers } = req;
 
-     Account.findByPk(id)
-       .then((data) => {
-         res.send(data);
-       })
-       .catch((err) => {
-         res.status(500).send({
-           message: "Error retrieving Account id=" + id,
-         });
-       });
+  const includes = associatedTransfers
+    ? { include: ["outgoingTransfer", "incomingTransfer"] }
+    : {};
+
+  Account.findByPk(id, includes)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Account id=" + id,
+      });
+    });
 };
 
 // Update a Account by the id in the request
