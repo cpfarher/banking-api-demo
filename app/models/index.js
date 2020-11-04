@@ -24,7 +24,7 @@ db.accounts = require("./account.model.js")(sequelize, Sequelize);
 db.transfers = require("./transfer.model.js")(sequelize, Sequelize);
 
 // customer - accounts association:
-db.customers.hasMany(db.accounts, {as: "accounts"})
+db.customers.hasMany(db.accounts, { as: "accounts" })
 db.accounts.belongsTo(db.customers, {
   foreignKey: "customerId",
   as: "customer"
