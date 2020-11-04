@@ -40,7 +40,9 @@ module.exports = (app) => {
    *      '200':
    *        description: A successful response
    *      '400':
-   *        description:
+   *        description: Bad Request
+   *      '422':
+   *        description: Unprocessable Entity
    *      '500':
    *        description: A problem occurred in the server
    */
