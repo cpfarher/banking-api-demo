@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require("swagger-ui-express");
+const _ = require('lodash')
 
 var corsOptions = {
   origin: "http://localhost:8081",
@@ -58,9 +59,48 @@ require("./app/routes/transfer.routes")(app);
 //===============================================================
 //========================SEQUELIZE==============================
 // SEQUELIZE: force: true => for create table and dropping
-db.sequelize.sync({ alter: true }).then(() => {
-  console.log("Drop and re-sync db.");
+db.sequelize.sync().then(() => {
+  db.sequelize.sync({ alter: true }).then(() => {
+    console.log("Drop and re-sync db.");
+    //seed default data:
+    const customerDemoData = [
+      {
+        id: 1,
+        name: "Arisha Barron",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 2,
+        name: "Branden Gibson",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 3,
+        name: "Rhonda Church",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 4,
+        name: "Georgina Hazel",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    customerDemoData.forEach((e) => {
+      db.customers.findOrCreate({
+        where: { id: e.id },
+        defaults: _.pick(e, ['name', 'createdAt', 'updatedat'])
+      }).then((r) => {
+        console.log(r);
+      });
+    });
+
+  })
 });
+
 //===============================================================
 //===============================================================
 
