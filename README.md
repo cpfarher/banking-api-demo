@@ -11,13 +11,19 @@ After docker-compose is installed, follow these steps:
 2. Execute `make run`. Running this command will build the image for run the system locally.
 3. Once you executed `make run`, **wait until all the components init** (it may take a couple minutes) and access the web api through <http://localhost:8080>.
 
-### EXTRA-FUTURE IDEAS:
+Take in account that the by default the system pre-populate the Customer table.
+
+
+### TODO:
+* More tests - Not finished yet!
+* Add more validations on models - Not finished yet!
+
+### OTHER TODO's:
 * Add Login and authorization for api
-* Add Emplooyee Model (represent employee of bank). Can manage the accounts and do transfers. Add info about who employee do the transfer for example.
-* Add more validations on models
+* Maybe Add Emplooyee Model (represent employee of bank). Can manage the accounts and do transfers. Add info about who employee do the transfer for example.
 * Improve historial transfer: Create a paper trail of a model (without relationships) for transfers (in order to keep versioning if instance model was deleted) - possible use of: sequelize-paper-trail npm package.
 * Implement migrations and seed with sequelize-cli
-* Add pagination to api.
+* Add pagination to api (maybe use sequelize-pagination)
 
 ### Brief
 
