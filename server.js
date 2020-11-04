@@ -94,7 +94,7 @@ db.sequelize.sync().then(() => {
         where: { id: e.id },
         defaults: _.pick(e, ['name', 'createdAt', 'updatedat'])
       }).then((r) => {
-        console.log(r);
+        //console.log(r);
       });
     });
 
@@ -111,9 +111,10 @@ app.get("/", (req, res) => {
   res.redirect('api-docs/')
 });
 
-app.listen(config.PORT, () => {
+const server = app.listen(config.PORT, () => {
   console.log(`NODE_ENV=${config.NODE_ENV}`);
   console.log(`Server is running on: http://${config.HOST}:${config.PORT}`);
 });
 //===============================================================
 //===============================================================
+module.exports = server;
