@@ -2,8 +2,45 @@ module.exports = (app) => {
   const customers = require("../controllers/customer.controller.js");
 
   var router = require("express").Router();
-
-  // Create a new Customer
+  // Create a new Account
+  /**
+   * @swagger
+   * /customers:
+   *  post:
+   *    summary: Create a customer
+   *    tags:
+   *      - Customer
+   *    consumes:
+   *      - application/json
+   *      - application/x-www-form-urlencoded
+   *    parameters:
+   *      - in: body
+   *        name: customer
+   *        description: The customer to create.
+   *        schema:
+   *          type: object
+   *          required:
+   *            - name
+   *          properties:
+   *            name:
+   *              type: string
+   *              required: true
+   *              unique: true
+   *              description: Name of customer
+   *            passport:
+   *              type: string
+   *              required: false
+   *              description: Optional passport for customer
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   *      '400':
+   *        description: Bad Request
+   *      '422':
+   *        description: Unprocessable Entity
+   *      '500':
+   *        description: A problem occurred in the server
+   */
   router.post("/", customers.create);
 
   /**
