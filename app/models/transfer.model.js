@@ -1,7 +1,38 @@
+  /**
+   * @swagger
+   * definitions:
+   *   Transfer:
+   *     type: object
+   *     required:
+   *       -fromAccountId
+   *       -toAccountId
+   *       -amount
+   *     properties:
+   *       id:
+   *         type: integer
+   *       amount:
+   *         type: decimal
+   *         description: Amount to transfer from account with id fromAccountId to account with id toAccountId
+   *       description:
+   *         type: string
+   *         required: false
+   *         description: Optional description for the transfer
+   *       fromAccountId:
+   *         type: integer
+   *         required: true
+   *         description: Numeric ID of the outgoing account
+   *       toAccountId:
+   *         type: integer
+   *         required: true
+   *         description: Numeric ID of the incoming account
+   */
 module.exports = (sequelize, Sequelize) => {
   const Transfer = sequelize.define("transfer", {
     amount: {
       type: Sequelize.DECIMAL(10, 2),
+      set(value) {
+        this.setDatavalue('amount', Math.abs(value))
+      }
     },
     description: {
       type: Sequelize.STRING,
