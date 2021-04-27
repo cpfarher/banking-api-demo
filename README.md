@@ -13,10 +13,12 @@ After docker-compose is installed, follow these steps:
 
 Take in account that the by default the system pre-populate the Customer table.
 
+For run test in development env after a `yarn install` run `yarn test`
 
 ### TODO:
 * More tests - Not finished yet!
 * Add more validations on models - Not finished yet!
+* Add test env for test execution!
 
 ### OTHER TODO's:
 * Add Login and authorization for api
