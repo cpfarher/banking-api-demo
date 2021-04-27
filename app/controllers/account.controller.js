@@ -2,11 +2,11 @@ const db = require("../models");
 const Account = db.accounts;
 const Customer = db.customers;
 const Op = db.Sequelize.Op;
-const _ = require('lodash');
+const _ = require("lodash");
 
 // Create and Save a new Account
 exports.create = (req, res) => {
-  const { balance, description, customerId } = req.body
+  const { balance, description, customerId } = req.body;
 
   // Validate request
   if (!customerId) {
@@ -22,33 +22,34 @@ exports.create = (req, res) => {
       res.status(422).send({
         message: "Customer Id does not exists!",
       });
+      return;
+    } else {
+      const account = {
+        balance: balance || 0.0, // initial balance
+        description: description, // description
+        customerId: customerId,
+      };
+      Account.create(account)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message || "There are some problem creating the Account.",
+          });
+        });
+      return;
     }
-    return;
-  })
-
-  const account = {
-    balance: balance || 0.0, // initial balance
-    description: description, // description
-    customerId: customerId
-  };
-
-  Account.create(account)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "There are some problem creating the Account.",
-      });
-    });
-
+  });
 };
 
 // Retrieve all Accounts from the database.
 exports.findAll = (req, res) => {
   const description = req.query.description;
-  var condition = description ? { description: { [Op.iLike]: `%${description}%` } } : null;
+  var condition = description
+    ? { description: { [Op.iLike]: `%${description}%` } }
+    : null;
 
   Account.findAll({ where: condition })
     .then((data) => {
@@ -56,46 +57,46 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "There are some problem retreaving Accounts",
+        message: err.message || "There are some problem retreaving Accounts",
       });
     });
 };
 
-
 exports.findOneWithTransferHistory = (req, res) => {
-   const { id } = req.params;
-   const { associatedTransfers } = req;
+  const { id } = req.params;
+  const { associatedTransfers } = req;
 
-   const includes = associatedTransfers
-     ? { include: ["outgoingTransfer", "incomingTransfer"] }
-     : {};
+  const includes = associatedTransfers
+    ? { include: ["outgoingTransfer", "incomingTransfer"] }
+    : {};
 
-   Account.findByPk(id, includes)
-     .then((data) => {
-       let history = []
-       Promise.all([data.getIncomingTransfer(), data.getOutgoingTransfer()]).then(
-         ([incomingTransfers,outgointTransfers]) => {
-           incomingTransfers.forEach((i) => {
-            history.push({
-              ...i.get({plain:true}),
-              ...{ transferType: "incoming" },
-            });
-           })
-           outgointTransfers.forEach((o) => {
-             history.push({
-               ...o.get({plain:true}),
-               ...{ transferType: "outgoing" },
-             });
-           });
-           res.send(_.sortBy(history, ['createdAt']))
-         })
-     })
-     .catch((err) => {
-       res.status(422).send({
-         message: "Error retrieving Account id=" + id,
-       });
-     });
+  Account.findByPk(id, includes)
+    .then((data) => {
+      let history = [];
+      Promise.all([
+        data.getIncomingTransfer(),
+        data.getOutgoingTransfer(),
+      ]).then(([incomingTransfers, outgointTransfers]) => {
+        incomingTransfers.forEach((i) => {
+          history.push({
+            ...i.get({ plain: true }),
+            ...{ transferType: "incoming" },
+          });
+        });
+        outgointTransfers.forEach((o) => {
+          history.push({
+            ...o.get({ plain: true }),
+            ...{ transferType: "outgoing" },
+          });
+        });
+        res.send(_.sortBy(history, ["createdAt"]));
+      });
+    })
+    .catch((err) => {
+      res.status(422).send({
+        message: "Error retrieving Account id=" + id,
+      });
+    });
 };
 
 exports.findOneWithAssociatedTransfers = (req, res) => {
