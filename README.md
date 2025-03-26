@@ -7,7 +7,7 @@ We recommend to run the system with docker-compose. To install docker-compose, g
 
 After docker-compose is installed, follow these steps:
 
-1. Clone this project `git clone https://trustle-iaqpie@git.codesubmit.io/trustle/banking-api-w-node-iaqpie && cd banking-api-w-node-iaqpie`
+1. Clone this project `git clone https://t-iaqpie@git.codesubmit.io/t/banking-api-w-node-iaqpie && cd banking-api-w-node-iaqpie`
 2. Execute `make run`. Running this command will build the image for run the system locally.
 3. Once you executed `make run`, **wait until all the components init** (it may take a couple minutes) and access the web api through <http://localhost:8080>.
 
@@ -85,4 +85,4 @@ Please organize, design, test and document your code as if it were going into pr
 
 All the best and happy coding,
 
-The Trustle Team
+The T Team
